@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青甘大环线 · 行前注意事项</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0f151b;
+    --slate:#18222c;
+    --surface:rgba(28,40,52,.55);
+    --line:rgba(180,200,208,.14);
+    --salt:#eef4f1;
+    --haze:#9fb2b8;
+    --haze-dim:#6d818a;
+    --gold:#e6ac5c;
+    --gold-soft:#f0c589;
+    --teal:#48a5b0;
+    --teal-soft:#7fc9cf;
+    --rust:#c26a44;
+    --mint:#bfe0d6;
+    --shadow:0 24px 60px -30px rgba(0,0,0,.85);
+    --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+    background:var(--night);
+    color:var(--salt);
+    line-height:1.85;
+    overflow-x:hidden;
+    letter-spacing:.01em;
+  }
+  ::selection{background:rgba(230,172,92,.32);color:#fff}
+
+  /* ---------- ambient atmosphere (scroll-driven crossfade) ---------- */
+  .atmo{position:fixed;inset:0;z-index:-2;opacity:0;transition:opacity 1.4s ease}
+  body[data-phase="1"] .a1{opacity:1}
+  body[data-phase="2"] .a2{opacity:1}
+  body[data-phase="3"] .a3{opacity:1}
+  body[data-phase="4"] .a4{opacity:1}
+  .a1{background:
+     radial-gradient(120% 90% at 78% 8%, rgba(90,160,180,.34), transparent 55%),
+     radial-gradient(90% 70% at 12% 88%, rgba(210,140,90,.16), transparent 60%),
+     linear-gradient(170deg,#0c1620 0%,#0f1a24 45%,#0d151d 100%);}
+  .a2{background:
+     radial-gradient(120% 100% at 30% 12%, rgba(120,200,196,.32), transparent 58%),
+     radial-gradient(80% 70% at 85% 90%, rgba(90,150,170,.18), transparent 60%),
+     linear-gradient(170deg,#0d1a1f 0%,#0f1d20 50%,#0d1519 100%);}
+  .a3{background:
+     radial-gradient(130% 100% at 74% 6%, rgba(232,168,80,.36), transparent 56%),
+     radial-gradient(90% 80% at 10% 96%, rgba(190,88,50,.24), transparent 58%),
+     linear-gradient(170deg,#1a130d 0%,#171009 48%,#120d0a 100%);}
+  .a4{background:
+     radial-gradient(120% 90% at 20% 6%, rgba(180,110,80,.20), transparent 55%),
+     radial-gradient(100% 90% at 82% 96%, rgba(70,110,130,.20), transparent 60%),
+     linear-gradient(170deg,#0e131a 0%,#0c1116 50%,#090c10 100%);}
+  .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  /* ---------- fixed chrome ---------- */
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+    background:linear-gradient(90deg,var(--teal),var(--gold));box-shadow:0 0 12px rgba(230,172,92,.5)}
+  .rail{position:fixed;left:34px;top:50%;transform:translateY(-50%);z-index:50;
+    display:flex;flex-direction:column;gap:0;align-items:flex-start}
+  .rail .seg{width:1px;height:34px;background:var(--line);margin-left:5px}
+  .rail .node{display:flex;align-items:center;gap:12px;cursor:default}
+  .rail .dot{width:11px;height:11px;border-radius:50%;border:1px solid var(--haze-dim);
+    background:var(--night);transition:all .5s ease;flex-shrink:0}
+  .rail .lbl{font-size:11px;letter-spacing:.28em;color:var(--haze-dim);
+    transition:all .5s ease;font-weight:500;opacity:.55}
+  .rail .node.on .dot{border-color:var(--gold);background:var(--gold);box-shadow:0 0 14px rgba(230,172,92,.7);transform:scale(1.15)}
+  .rail .node.on .lbl{color:var(--salt);opacity:1;letter-spacing:.32em}
+
+  /* ---------- layout ---------- */
+  section{position:relative;padding:16vh 7vw;max-width:var(--max);margin:0 auto}
+  @media(min-width:1000px){section{padding-left:120px;padding-right:120px}}
+  .eyebrow{display:flex;align-items:baseline;gap:16px;margin-bottom:26px}
+  .eyebrow .idx{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
+    color:var(--gold);letter-spacing:.18em}
+  .eyebrow .en{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.42em;
+    text-transform:uppercase;color:var(--haze-dim)}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7;align-self:center;margin-top:2px}
+  h2{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(2rem,5.6vw,3.4rem);
+    line-height:1.18;letter-spacing:.02em;margin-bottom:8px}
+  h2 .sub{display:block;font-family:'Noto Sans SC',sans-serif;font-weight:300;
+    font-size:clamp(.9rem,2.2vw,1.05rem);color:var(--haze);letter-spacing:.18em;margin-top:16px}
+  h3{font-family:'Noto Serif SC',serif;font-weight:500;font-size:1.28rem;
+    letter-spacing:.03em;margin-bottom:14px;color:var(--salt)}
+  p{color:#cdd8dc;font-weight:300;font-size:1.02rem}
+  p.lead{font-size:1.12rem;color:#dbe4e6;font-weight:300}
+  strong{color:var(--gold-soft);font-weight:500}
+  em{font-style:normal;color:var(--teal-soft);font-weight:500}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:30px 32px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:20px}
+  @media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+  .mt{margin-top:22px}.mt-l{margin-top:44px}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:100svh;max-width:none;display:flex;flex-direction:column;justify-content:center;
+    padding:0 7vw}
+  @media(min-width:1000px){.hero{padding:0 120px}}
+  .hero .kick{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.5em;
+    text-transform:uppercase;color:var(--teal-soft);margin-bottom:30px}
+  .hero h1{font-family:'Noto Serif SC',serif;font-weight:900;
+    font-size:clamp(3.6rem,15vw,9rem);line-height:.98;letter-spacing:.04em;
+    background:linear-gradient(120deg,#fff 10%,var(--gold-soft) 55%,var(--teal-soft) 105%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .tag{font-family:'Noto Serif SC',serif;font-weight:400;font-size:clamp(1.1rem,3.6vw,1.7rem);
+    color:var(--haze);letter-spacing:.5em;margin-top:22px;padding-left:.5em}
+  .route-line{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:52px;
+    font-family:'Space Grotesk',sans-serif;font-size:clamp(.82rem,2.6vw,1.05rem);letter-spacing:.14em;color:var(--salt)}
+  .route-line .city{position:relative}
+  .route-line .arrow{color:var(--gold);opacity:.85}
+  .route-line .dates{font-size:12px;color:var(--haze-dim);letter-spacing:.2em;margin-top:4px}
+  .hero .why{max-width:640px;margin-top:46px;color:#c3d0d3;font-weight:300;font-size:1.05rem}
+  .hero .why b{color:var(--gold-soft);font-weight:500}
+  .scroll-cue{position:absolute;bottom:34px;left:7vw;display:flex;align-items:center;gap:12px;
+    font-size:11px;letter-spacing:.34em;color:var(--haze-dim);text-transform:uppercase}
+  @media(min-width:1000px){.scroll-cue{left:120px}}
+  .scroll-cue .bar{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);position:relative;overflow:hidden}
+  .scroll-cue .bar::after{content:"";position:absolute;top:-40%;left:0;width:100%;height:40%;
+    background:var(--gold);animation:drop 2.2s cubic-bezier(.7,0,.3,1) infinite}
+  @keyframes drop{0%{top:-40%}60%,100%{top:120%}}
+
+  /* five forces chips */
+  .forces{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
+  .forces .f{display:flex;align-items:center;gap:9px;padding:9px 16px;border:1px solid var(--line);
+    border-radius:40px;background:rgba(28,40,52,.35);font-size:.9rem;letter-spacing:.08em}
+  .forces .f .zi{font-family:'Noto Serif SC',serif;font-weight:700;font-size:1.15rem;color:var(--gold)}
+  .forces .f span.d{color:var(--haze-dim);font-size:.82rem}
+
+  /* ---------- WEATHER STRIP ---------- */
+  .wx{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+  .wx-head,.wx-row{display:grid;grid-template-columns:104px 1fr 140px;align-items:center;gap:18px;padding:13px 4px}
+  .wx-head{border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.16em;color:var(--haze-dim);text-transform:uppercase;font-family:'Space Grotesk',sans-serif}
+  .wx-row{border-bottom:1px solid rgba(180,200,208,.07)}
+  .wx-row .loc{font-weight:500}
+  .wx-row .loc .dt{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--haze-dim);letter-spacing:.06em;display:block;margin-top:2px}
+  .track{position:relative;height:10px;border-radius:6px;background:rgba(180,200,208,.08)}
+  .track .fill{position:absolute;top:0;height:100%;border-radius:6px;
+    background:linear-gradient(90deg,var(--teal) 0%,var(--gold) 100%);opacity:.9}
+  .track .tmin,.track .tmax{position:absolute;top:-22px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;transform:translateX(-50%)}
+  .track .tmin{color:var(--teal-soft)}.track .tmax{color:var(--gold-soft)}
+  .wx-row .meta{text-align:right;font-size:.86rem;color:var(--haze)}
+  .wx-row .meta .hum{font-family:'Space Grotesk',sans-serif;color:var(--haze-dim);font-size:12px;letter-spacing:.05em}
+  @media(max-width:640px){
+    .wx-head,.wx-row{grid-template-columns:82px 1fr;gap:12px}
+    .wx-row .meta{grid-column:1/-1;text-align:left;padding-left:0;margin-top:2px}
+    .wx-head span:last-child{display:none}
+  }
+  .swing{display:flex;flex-wrap:wrap;gap:26px;margin-top:34px}
+  .swing .big{display:flex;flex-direction:column}
+  .swing .n{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1}
+  .swing .n.cold{color:var(--teal-soft)}.swing .n.hot{color:var(--gold-soft)}.swing .n.dry{color:var(--rust)}
+  .swing .k{font-size:.8rem;color:var(--haze-dim);letter-spacing:.14em;margin-top:8px}
+
+  /* ---------- LAYER STACK ---------- */
+  .layers{display:flex;flex-direction:column;gap:14px;margin-top:10px}
+  .layer{position:relative;border:1px solid var(--line);border-radius:14px;padding:24px 26px 24px 78px;
+    background:var(--surface);overflow:hidden}
+  .layer .no{position:absolute;left:24px;top:22px;font-family:'Noto Serif SC',serif;font-weight:700;
+    font-size:1.5rem;width:34px;text-align:center}
+  .layer.l1{border-left:3px solid var(--gold)}.layer.l1 .no{color:var(--gold)}
+  .layer.l2{border-left:3px solid var(--teal)}.layer.l2 .no{color:var(--teal-soft)}
+  .layer.l3{border-left:3px solid var(--rust)}.layer.l3 .no{color:var(--rust)}
+  .layer h4{font-family:'Noto Serif SC',serif;font-size:1.12rem;font-weight:500;margin-bottom:6px}
+  .layer .rng{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--haze-dim);letter-spacing:.06em;margin-left:12px;font-weight:500}
+
+  /* generic list */
+  ul.clean{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:6px}
+  ul.clean li{position:relative;padding-left:22px;color:#c8d4d7;font-weight:300}
+  ul.clean li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;
+    border-radius:50%;background:var(--gold);opacity:.75}
+  ul.clean li b{color:var(--salt);font-weight:500}
+
+  /* chips / tags */
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+  .chip{padding:7px 15px;border-radius:8px;background:rgba(72,165,176,.1);border:1px solid rgba(72,165,176,.24);
+    font-size:.88rem;color:#d4e2e4;letter-spacing:.02em}
+  .chip.gold{background:rgba(230,172,92,.1);border-color:rgba(230,172,92,.26);color:var(--gold-soft)}
+  .chip.no{background:rgba(194,106,68,.08);border-color:rgba(194,106,68,.28);color:#dcae9b;text-decoration:line-through;text-decoration-color:rgba(194,106,68,.55)}
+
+  /* note / callout */
+  .note{border-left:2px solid var(--teal);padding:6px 0 6px 20px;margin-top:20px;color:var(--haze)}
+  .note b{color:var(--teal-soft);font-weight:500}
+  .warn{border-left:2px solid var(--rust);background:rgba(194,106,68,.07);border-radius:0 12px 12px 0;
+    padding:18px 22px;margin-top:22px}
+  .warn h4{color:var(--rust);font-family:'Noto Serif SC',serif;font-size:1.02rem;margin-bottom:8px;letter-spacing:.03em}
+  .warn p{color:#e2c6ba;font-size:.96rem}
+
+  /* photo palettes */
+  .pal{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .pal .sw{display:flex;gap:6px}
+  .pal .sw i{width:26px;height:26px;border-radius:5px;display:block;border:1px solid rgba(255,255,255,.12)}
+  .pal .cap{font-size:.82rem;color:var(--haze);letter-spacing:.04em}
+
+  /* steps */
+  ol.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:2px;margin-top:8px}
+  ol.steps li{counter-increment:s;position:relative;padding:16px 0 16px 58px;border-bottom:1px solid rgba(180,200,208,.08)}
+  ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:14px;
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.1rem;color:var(--gold);letter-spacing:.05em}
+  ol.steps li b{color:var(--salt);font-weight:500}
+
+  /* emergency card */
+  .sos{display:grid;gap:16px;margin-top:24px}
+  @media(min-width:620px){.sos{grid-template-columns:1fr 1fr}}
+  .sos .box{border:1px solid var(--line);border-radius:14px;padding:22px 26px;background:rgba(28,40,52,.5)}
+  .sos .box .t{font-size:.78rem;letter-spacing:.2em;color:var(--haze-dim);text-transform:uppercase;font-family:'Space Grotesk',sans-serif}
+  .sos .box .num{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.7rem;color:var(--gold-soft);margin-top:10px;letter-spacing:.04em}
+  .sos .box.r .num{color:var(--rust)}
+
+  /* closing */
+  .closer{max-width:760px}
+  .closer .final{font-family:'Noto Serif SC',serif;font-weight:400;font-size:clamp(1.3rem,4vw,2rem);
+    line-height:1.65;color:var(--salt);margin-top:10px}
+  .closer .final u{text-decoration:none;color:var(--gold-soft);border-bottom:1px solid rgba(230,172,92,.4)}
+  footer{text-align:center;padding:60px 7vw 80px;color:var(--haze-dim);font-size:.8rem;letter-spacing:.2em}
+  footer .dot{color:var(--gold);margin:0 10px}
+
+  @media(max-width:1000px){.rail{display:none}}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .atmo{transition:opacity .3s}
+    .scroll-cue .bar::after{animation:none}
+  }
+</style>
+</head>
+<body data-phase="1">
+
+<div class="atmo a1"></div>
+<div class="atmo a2"></div>
+<div class="atmo a3"></div>
+<div class="atmo a4"></div>
+<div class="grain"></div>
+<div class="progress" id="prog"></div>
+
+<nav class="rail" aria-hidden="true">
+  <div class="node" data-p="1"><span class="dot"></span><span class="lbl">西宁</span></div>
+  <div class="seg"></div>
+  <div class="node" data-p="2"><span class="dot"></span><span class="lbl">德令哈</span></div>
+  <div class="seg"></div>
+  <div class="node" data-p="3"><span class="dot"></span><span class="lbl">敦煌</span></div>
+  <div class="seg"></div>
+  <div class="node" data-p="4"><span class="dot"></span><span class="lbl">张掖</span></div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" data-phase="1">
+  <div class="kick reveal">Qinghai · Gansu Grand Loop</div>
+  <h1 class="reveal">青甘大环线</h1>
+  <div class="tag reveal">行 前 注 意 事 项</div>
+
+  <div class="route-line reveal">
+    <span class="city">西宁<span class="dates">07·02</span></span><span class="arrow">→</span>
+    <span class="city">德令哈<span class="dates">07·03–04</span></span><span class="arrow">→</span>
+    <span class="city">敦煌<span class="dates">07·05–07</span></span><span class="arrow">→</span>
+    <span class="city">张掖<span class="dates">07·08</span></span>
+  </div>
+
+  <p class="why reveal">这趟旅行最容易出问题的，从来不是<b>"没带漂亮衣服"</b>——而是晒伤、中暑、缺水、风寒、高反、晕车，以及证件与预约的遗漏。往下滑，把这五个字先算进行囊里。</p>
+
+  <div class="forces reveal">
+    <div class="f"><span class="zi">干</span><span class="d">空气 / 皮肤</span></div>
+    <div class="f"><span class="zi">晒</span><span class="d">紫外线</span></div>
+    <div class="f"><span class="zi">风</span><span class="d">湖畔 / 垭口</span></div>
+    <div class="f"><span class="zi">盐</span><span class="d">盐湖反光</span></div>
+    <div class="f"><span class="zi">沙</span><span class="d">沙漠 / 雅丹</span></div>
+  </div>
+
+  <div class="scroll-cue"><span class="bar"></span>SCROLL</div>
+</header>
+
+<!-- ============ 01 天气 ============ -->
+<section data-phase="1">
+  <div class="eyebrow reveal"><span class="idx">01</span><span class="en">Weather</span></div>
+  <h2 class="reveal">环境，先替你定好了规则<span class="sub">未来一周天气预报 · 一条从清晨到正午的巨大温差线</span></h2>
+
+  <div class="card mt-l reveal">
+    <div class="wx">
+      <div class="wx-head"><span>城市</span><span>气温区间 · ℃</span><span>天况 / 湿度</span></div>
+      <div class="wx-row"><div class="loc">西宁<span class="dt">JUL 02</span></div>
+        <div class="track"><div class="fill" style="left:16.2%;width:43.3%"></div><span class="tmin" style="left:16.2%">11°</span><span class="tmax" style="left:59.5%">27°</span></div>
+        <div class="meta">小雨转晴<br><span class="hum">湿度 44%</span></div></div>
+      <div class="wx-row"><div class="loc">德令哈<span class="dt">JUL 03</span></div>
+        <div class="track"><div class="fill" style="left:27.0%;width:32.4%"></div><span class="tmin" style="left:27.0%">15°</span><span class="tmax" style="left:59.5%">27°</span></div>
+        <div class="meta">晴转多云<br><span class="hum">湿度 33%</span></div></div>
+      <div class="wx-row"><div class="loc">德令哈<span class="dt">JUL 04</span></div>
+        <div class="track"><div class="fill" style="left:29.7%;width:29.7%"></div><span class="tmin" style="left:29.7%">16°</span><span class="tmax" style="left:59.5%">27°</span></div>
+        <div class="meta">晴<br><span class="hum">湿度 25%</span></div></div>
+      <div class="wx-row"><div class="loc">敦煌<span class="dt">JUL 05</span></div>
+        <div class="track"><div class="fill" style="left:43.2%;width:51.4%"></div><span class="tmin" style="left:43.2%">21°</span><span class="tmax" style="left:94.6%">40°</span></div>
+        <div class="meta">多云<br><span class="hum">湿度 7%</span></div></div>
+      <div class="wx-row"><div class="loc">敦煌<span class="dt">JUL 06</span></div>
+        <div class="track"><div class="fill" style="left:35.1%;width:40.5%"></div><span class="tmin" style="left:35.1%">18°</span><span class="tmax" style="left:75.7%">33°</span></div>
+        <div class="meta">多云<br><span class="hum">湿度 8%</span></div></div>
+      <div class="wx-row"><div class="loc">敦煌<span class="dt">JUL 07</span></div>
+        <div class="track"><div class="fill" style="left:35.1%;width:51.4%"></div><span class="tmin" style="left:35.1%">18°</span><span class="tmax" style="left:86.5%">37°</span></div>
+        <div class="meta">多云转小雨<br><span class="hum">湿度 12%</span></div></div>
+      <div class="wx-row"><div class="loc">张掖<span class="dt">JUL 08</span></div>
+        <div class="track"><div class="fill" style="left:40.5%;width:40.5%"></div><span class="tmin" style="left:40.5%">20°</span><span class="tmax" style="left:81.1%">35°</span></div>
+        <div class="meta">多云<br><span class="hum">湿度 14%</span></div></div>
+    </div>
+
+    <div class="swing">
+      <div class="big"><span class="n cold">11°</span><span class="k">西宁清晨 · 最冷</span></div>
+      <div class="big"><span class="n hot">40°</span><span class="k">敦煌正午 · 最热</span></div>
+      <div class="big"><span class="n dry">7%</span><span class="k">敦煌湿度 · 极干</span></div>
+    </div>
+  </div>
+
+  <div class="card mt reveal">
+    <h3>核心原则</h3>
+    <p class="lead">白天防晒透气，早晚保暖防风，雨天轻防水，敦煌段重点<strong>防晒防干燥</strong>。整体不需要厚冬装，但<em>一定要有一件能抗风、早晚保暖的外套</em>。</p>
+  </div>
+</section>
+
+<!-- ============ 02 衣物 ============ -->
+<section data-phase="2">
+  <div class="eyebrow reveal"><span class="idx">02</span><span class="en">Clothing</span></div>
+  <h2 class="reveal">三层穿法，对付一天里的四季<span class="sub">内层速干 · 中层保暖 · 外层抗风——温差比温度更值得防</span></h2>
+
+  <div class="layers mt-l">
+    <div class="layer l1 reveal"><span class="no">内</span>
+      <h4>速干 T 恤 / 轻薄长袖<span class="rng">白天 33–40℃</span></h4>
+      <p>尤其敦煌非常热，普通厚棉 T 恤容易闷汗。带速干短袖、薄长袖、防晒衣。</p></div>
+    <div class="layer l2 reveal"><span class="no">中</span>
+      <h4>薄卫衣 / 薄抓绒 / 针织开衫<span class="rng">早晚 11–16℃</span></h4>
+      <p>西宁、德令哈早晚偏冷，青海湖、茶卡、德令哈一带风大时体感更冷，需要中层保暖。</p></div>
+    <div class="layer l3 reveal"><span class="no">外</span>
+      <h4>轻薄冲锋衣 / 防风外套<span class="rng">挡风 · 挡雨 · 抗温差</span></h4>
+      <p>7·02 西宁小雨转晴、7·07 敦煌多云转小雨。不是为了保暖厚度，而是为了挡风、挡雨、抗温差。</p></div>
+  </div>
+
+  <div class="grid g2 mt-l">
+    <div class="card reveal">
+      <h3>鞋 · 带两双</h3>
+      <ul class="clean">
+        <li><b>主力鞋</b>：运动鞋或轻徒步鞋，防滑、包脚、鞋底厚，走碎石、沙地、木栈道、雅丹边缘。</li>
+        <li><b>涉水鞋 / 凉拖</b>：茶卡盐湖别光脚久踩，盐粒割脚、湖水刺激，用景区鞋套或自带涉水鞋。</li>
+        <li>白鞋在盐湖、沙漠、土路极易脏，别带唯一一双小白鞋。</li>
+        <li>鸣沙山爬沙山鞋里必进沙，<b>高帮鞋或一次性鞋套</b>会舒服很多。</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3>配件 · 都是必需品</h3>
+      <ul class="clean">
+        <li><b>墨镜</b>不是装饰。盐湖反光强，久不戴会刺痛、流泪、畏光——带 UV400 偏光。</li>
+        <li><b>宽檐帽 + 帽绳</b>：别只带鸭舌帽，耳朵后颈会暴露；风大普通帽子易被吹走。</li>
+        <li><b>围巾 / 头巾</b>：防晒、防风、防沙，早晚也能保暖。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card mt-l reveal">
+    <h3>拍照穿搭 · 分三种地貌</h3>
+    <div class="grid g3 mt">
+      <div class="pal"><div class="sw"><i style="background:#f2f4f5"></i><i style="background:#bcd3e0"></i><i style="background:#c9463f"></i><i style="background:#e8d48a"></i></div><span class="cap"><b style="color:var(--salt)">茶卡 / 翡翠湖</b> · 白、浅蓝、红、淡黄、民族披肩。风大，裙摆过长会拖盐水。</span></div>
+      <div class="pal"><div class="sw"><i style="background:#b83a2e"></i><i style="background:#1a1a1a"></i><i style="background:#f2f0ea"></i><i style="background:#c39b6a"></i></div><span class="cap"><b style="color:var(--salt)">敦煌沙漠</b> · 红、黑、白、驼、牛仔。墨镜和围巾很有氛围。</span></div>
+      <div class="pal"><div class="sw"><i style="background:#111"></i><i style="background:#6b6f73"></i><i style="background:#c7ccd0"></i><i style="background:#5a5140"></i></div><span class="cap"><b style="color:var(--salt)">雅丹 / 黑独山 / 戈壁</b> · 黑、灰、银、工装、冲锋衣更配地貌。</span></div>
+    </div>
+    <div class="note"><b>别全带浅色</b>——敦煌沙、雅丹土、盐湖盐渍会让衣服迅速变脏。</div>
+  </div>
+
+  <div class="grid g2 mt-l">
+    <div class="card reveal"><h3>穿身上</h3>
+      <div class="chips"><span class="chip">短袖 ×1</span><span class="chip">轻薄长裤 ×1</span><span class="chip">运动鞋</span><span class="chip gold">防晒衣 / 薄外套随身</span></div></div>
+    <div class="card reveal"><h3>行李箱里</h3>
+      <div class="chips"><span class="chip">短袖 ×4</span><span class="chip">薄长袖 ×2</span><span class="chip">薄卫衣 ×1</span><span class="chip">冲锋衣 ×1</span><span class="chip">长裤 ×3</span><span class="chip">休闲裤 ×1</span><span class="chip">内裤 ×8</span><span class="chip">袜子 ×8</span><span class="chip">睡衣 ×1</span><span class="chip">主鞋 ×1</span><span class="chip">拖鞋 ×1</span></div></div>
+  </div>
+</section>
+
+<!-- ============ 03 护肤 ============ -->
+<section data-phase="2">
+  <div class="eyebrow reveal"><span class="idx">03</span><span class="en">Skincare</span></div>
+  <h2 class="reveal">和"干、晒、风、盐、沙"较劲<span class="sub">西北极干 · 眼睛和鼻腔，会比皮肤更早喊难受</span></h2>
+
+  <div class="grid g2 mt-l">
+    <div class="card reveal">
+      <h3>补水锁水</h3>
+      <p>西北非常干，嘴唇、鼻腔、手部容易裂。盐湖和沙漠之后皮肤更干，晚上要及时清洁保湿。</p>
+      <div class="chips"><span class="chip">润唇膏</span><span class="chip">保湿面霜</span><span class="chip">身体乳</span><span class="chip">护手霜</span><span class="chip">凡士林</span></div>
+      <div class="note">隐形眼镜用户谨慎：风沙大、空气干，易眼干进沙，<b>最好带框架眼镜备用</b>。化妆则底妆轻薄，防晒优先于妆效——盐湖、敦煌暴晒下厚底妆容易斑驳。</div>
+    </div>
+    <div class="card reveal">
+      <h3>防晒 · SPF50+ PA++++</h3>
+      <ul class="clean">
+        <li>脸和身体都要能涂，备 <b>50–100mL 小包装</b>方便过安检。</li>
+        <li>不是早上涂一次就够：敦煌、盐湖、雅丹每 <b>2–3 小时补一次</b>，出汗后更要补。</li>
+        <li><b>物理防晒比防晒霜更可靠</b>：宽檐帽、墨镜、防晒口罩 / 魔术头巾、防晒袖套、薄长袖。</li>
+      </ul>
+      <div class="warn"><h4>反光会从地面"补刀"</h4><p>茶卡、水上雅丹、翡翠湖的水面 / 盐面会反射紫外线，<b>下巴、脖子、耳朵、手背</b>特别容易被晒伤。</p></div>
+    </div>
+  </div>
+
+  <div class="card mt-l reveal">
+    <h3>化妆品汇总</h3>
+    <div class="chips">
+      <span class="chip">洁面 1</span><span class="chip gold">防晒霜 2</span><span class="chip">面霜 1</span><span class="chip">精华 1</span><span class="chip">护手霜 1</span><span class="chip">润唇膏 2</span><span class="chip">身体乳 1</span><span class="chip">卸妆巾/膏 1</span><span class="chip">面膜 3</span><span class="chip">粉底/隔离 1</span><span class="chip">散粉 1</span><span class="chip">眉笔 1</span><span class="chip">口红 1–2</span>
+    </div>
+    <div class="note mt"><b>防晒厚涂后一定要卸妆</b>。用卸妆巾或卸妆膏分装最省空间，别带大瓶卸妆水——易漏，也占液体额度。</div>
+  </div>
+
+  <div class="warn reveal" style="margin-top:26px">
+    <h4>比补水喷雾更实用的两件</h4>
+    <p>额外带一瓶 <b style="color:var(--gold-soft)">人工泪液</b> 和一个 <b style="color:var(--gold-soft)">生理盐水鼻喷</b>。青甘非常干，眼睛和鼻腔往往比皮肤更先不舒服。</p>
+  </div>
+</section>
+
+<!-- ============ 04 健康 ============ -->
+<section data-phase="3">
+  <div class="eyebrow reveal"><span class="idx">04</span><span class="en">Health &amp; Altitude</span></div>
+  <h2 class="reveal">高原在低处，烈日在高处<span class="sub">很多点位在 3000m 上下 · 敦煌段可能 40℃ 以上</span></h2>
+
+  <div class="card mt-l reveal">
+    <h3>高反 · 别和海拔硬碰</h3>
+    <p>茶卡盐湖、青海湖、大柴旦、祁连、部分垭口，都会让没适应的人出现头痛、胸闷、心跳快、睡不好、恶心、乏力。</p>
+    <ul class="clean mt">
+      <li>尽量<b>逐步上升</b>，别一到高海拔就大量运动；前 48 小时<b>避免饮酒</b>、只做轻度活动。</li>
+      <li>第一天别跑跳、别洗很热的澡、别喝酒熬夜、别剧烈拍照爬坡。</li>
+      <li>刚到西宁或高海拔住宿点：动作放慢、少洗头、别吃太撑、别情绪激动、睡前别大量喝水。</li>
+      <li>如必须快速上升，可咨询医生是否使用乙酰唑胺等药物。</li>
+    </ul>
+    <div class="warn"><h4>出现这些，立刻停止上行并就医</h4><p>严重头痛、走路不稳、意识模糊、持续呕吐、静息明显呼吸困难、嘴唇发紫——必要时下撤。氧气瓶可备，但别把吸氧当"提神工具"一直用。</p></div>
+  </div>
+
+  <div class="grid g2 mt-l">
+    <div class="card reveal">
+      <h3>常备药 · 别乱吃处方药</h3>
+      <div class="chips">
+        <span class="chip">布洛芬 / 对乙酰氨基酚</span><span class="chip">肠胃药</span><span class="chip">晕车药</span><span class="chip">电解质粉</span><span class="chip">葡萄糖</span><span class="chip">创可贴</span><span class="chip">碘伏棉签</span><span class="chip">润喉糖</span><span class="chip">感冒药</span>
+      </div>
+      <div class="note"><b>乙酰唑胺、地塞米松</b>要提前问医生。若有磺胺类过敏、肾脏问题、哮喘 / 呼吸疾病、心血管问题，更不能随意用。</div>
+    </div>
+    <div class="card reveal">
+      <h3>防暑 · 补水</h3>
+      <ul class="clean">
+        <li>敦煌、鸣沙山、雅丹尤其热。户外尽量排<b>早晨、傍晚、日落前后</b>，<b>12:00–16:00 避免无遮挡暴走</b>。</li>
+        <li>鸣沙山爬沙丘最好傍晚去；阳关、玉门关这类暴晒点，车上常备水。</li>
+        <li>别等口渴才喝，每天至少 <b>1.5–2.5L</b>，按活动量加。狂喝白水也难受，带<b>电解质片 / 粉</b>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card mt-l reveal">
+    <h3>长途坐车 · 每天车程都可能很长</h3>
+    <p>路上厕所条件不稳定，随身小包备齐这些：</p>
+    <div class="chips">
+      <span class="chip">湿巾 / 纸巾</span><span class="chip">一次性马桶垫</span><span class="chip">免洗洗手液</span><span class="chip">小垃圾袋</span><span class="chip">口罩</span><span class="chip">晕车药</span><span class="chip">耳机</span><span class="chip">U 形枕</span><span class="chip">眼罩</span>
+    </div>
+    <div class="note"><b>车上空调可能很冷</b>，薄外套放座位旁、别塞进行李箱。易晕车就别吃太饱、坐前排、少低头看手机、提前吃药。高原＋长途车＋睡眠不足会放大疲劳——<b>别硬熬夜修图</b>。</div>
+  </div>
+</section>
+
+<!-- ============ 05 饮食 ============ -->
+<section data-phase="3">
+  <div class="eyebrow reveal"><span class="idx">05</span><span class="en">Food</span></div>
+  <h2 class="reveal">头两天，让肠胃也慢慢适应<span class="sub">偏牛羊肉 · 面食 · 辣 · 咸</span></h2>
+
+  <div class="grid g2 mt-l">
+    <div class="card reveal">
+      <h3>刚到高原别暴饮暴食</h3>
+      <p class="lead">头一两天尽量吃<strong>七八分饱</strong>，少油腻、少酒、少冰饮。</p>
+      <div class="note mt">肠胃敏感的话，带<b>蒙脱石散、口服补液盐、益生菌</b>或常用肠胃药。</div>
+    </div>
+    <div class="card reveal">
+      <h3>自带应急零食</h3>
+      <p>长途车程吃饭时间不稳定，景区周边价格高、选择少，自己带一点很必要。</p>
+      <div class="chips"><span class="chip">能量棒</span><span class="chip">坚果</span><span class="chip">小面包</span><span class="chip">巧克力</span><span class="chip">牛肉干</span><span class="chip">葡萄糖软糖</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 景点与设备 ============ -->
+<section data-phase="3">
+  <div class="eyebrow reveal"><span class="idx">06</span><span class="en">Sites &amp; Devices</span></div>
+  <h2 class="reveal">规矩最多的地方，最先想清楚<span class="sub">莫高窟的门 · 茶卡的天 · 充电宝和无人机的红线</span></h2>
+
+  <div class="card mt-l reveal">
+    <h3>莫高窟 · 实名预约 + 实名验票</h3>
+    <p>购票和参观都要带有效身份证件。<strong>禁止</strong>将 20 寸及以上包裹、行李箱、宠物、无人机带入窟区；洞窟内严禁摄影摄像、触摸文物、刻划涂写、大声喧哗。</p>
+    <div class="note">当天<b>只背小包</b>：身份证 / 护照、手机、充电宝、水、小零食、纸巾即可。别拖行李箱，也别想着带无人机进去。</div>
+  </div>
+
+  <div class="grid g2 mt-l">
+    <div class="card reveal">
+      <h3>茶卡 · 拍照很看天</h3>
+      <ul class="clean">
+        <li><b>晴天、少风、水面平静</b>时镜面效果最好；阴天或大风，"天空之镜"会弱很多。</li>
+        <li>建议亮色或白色衣服，但别穿难清洗、怕盐渍的贵重衣物。</li>
+        <li>下湖后脚、小腿、鞋套都可能沾盐，出来<b>用清水冲洗</b>。</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3>电子设备 · 分散放</h3>
+      <ul class="clean">
+        <li>手机、相机、充电宝、数据线分开放。无人区、雅丹、盐湖信号不稳，<b>地图提前离线下载</b>。</li>
+        <li>带 <b>2 个充电宝</b>：主力 10000–20000mAh + 一个小备用。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid g2 mt-l">
+    <div class="card reveal">
+      <h3>充电宝上机规则 · 民航</h3>
+      <ul class="clean">
+        <li>充电宝 / 备用锂电池<b>不能托运</b>。</li>
+        <li>额定能量 <b>≤100Wh</b>：可随身携带。</li>
+        <li><b>100–160Wh</b>：需航司批准，每人限带 2 块。</li>
+        <li><b>&gt;160Wh</b>：不可携带。</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3>无人机 · 不是哪都能飞</h3>
+      <p>莫高窟已明确禁带入窟区。雅丹、盐湖、自然保护区、机场附近、军事管理区、边境或特殊区域也可能禁飞或需报备。</p>
+      <div class="warn"><h4>不确定，就不要飞</h4><p>黑独山、冷湖、部分无人区、景区核心区尤其容易涉及管理规定。带无人机就提前查每个景区公告、现场问工作人员。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 清单 ============ -->
+<section data-phase="4">
+  <div class="eyebrow reveal"><span class="idx">07</span><span class="en">Packing List</span></div>
+  <h2 class="reveal">三张清单，装完就安心<span class="sub">随身小包 · 行李箱 · 以及——别带的</span></h2>
+
+  <div class="card mt-l reveal">
+    <h3>随身小包</h3>
+    <div class="chips">
+      <span class="chip gold">身份证 / 护照</span><span class="chip">手机</span><span class="chip">充电宝</span><span class="chip">数据线</span><span class="chip">墨镜</span><span class="chip">防晒霜</span><span class="chip">润唇膏</span><span class="chip">纸巾湿巾</span><span class="chip">口罩</span><span class="chip">少量现金</span><span class="chip">晕车药</span><span class="chip">止痛药</span><span class="chip">创可贴</span><span class="chip">水</span><span class="chip">小零食</span><span class="chip">薄外套</span>
+    </div>
+  </div>
+
+  <div class="card mt reveal">
+    <h3>行李箱</h3>
+    <div class="chips">
+      <span class="chip">短袖/薄长袖 3–4</span><span class="chip">防晒衣 1</span><span class="chip">冲锋衣/防风外套 1</span><span class="chip">薄卫衣/抓绒 1</span><span class="chip">长裤 2</span><span class="chip">拍照裙/特色 1–2</span><span class="chip">睡衣</span><span class="chip">内衣袜子（天数+2）</span><span class="chip">运动鞋 1</span><span class="chip">拖鞋/涉水鞋 1</span><span class="chip">帽子</span><span class="chip">围巾/头巾</span><span class="chip">洗漱用品</span><span class="chip">护肤品</span><span class="chip">常用药</span><span class="chip">电解质粉</span><span class="chip">保温杯</span><span class="chip">塑料/密封袋</span>
+    </div>
+  </div>
+
+  <div class="card mt reveal">
+    <h3 style="color:var(--rust)">不建议带</h3>
+    <div class="chips">
+      <span class="chip no">大瓶防晒喷雾</span><span class="chip no">大瓶酒精喷雾</span><span class="chip no">露营气罐</span><span class="chip no">水果刀/多功能刀</span><span class="chip no">无人机随意进景区</span><span class="chip no">太多厚重衣服</span><span class="chip no">不好走路的鞋</span><span class="chip no">怕脏的白鞋白包</span><span class="chip no">过多现金</span><span class="chip no">大件行李进莫高窟</span><span class="chip no">超限的充电宝</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 最后检查 ============ -->
+<section data-phase="4">
+  <div class="eyebrow reveal"><span class="idx">08</span><span class="en">Final Check</span></div>
+  <h2 class="reveal">出发前一天，按这个顺序过一遍<span class="sub">顺序本身就是防遗漏的设计</span></h2>
+
+  <div class="card mt-l reveal">
+    <ol class="steps">
+      <li>确认 <b>莫高窟、茶卡盐湖、鸣沙山</b> 等门票和预约时间</li>
+      <li>再看一遍<b>每一天的城市天气</b></li>
+      <li>确认 <b>身份证 / 护照 / 学生证</b></li>
+      <li>检查<b>充电宝的 3C 标识</b></li>
+      <li>把<b>防晒、药品、外套</b>放进随身包</li>
+      <li>下载<b>离线地图</b>，保存<b>司机 / 酒店 / 景区电话</b></li>
+    </ol>
+  </div>
+
+  <div class="reveal">
+    <div class="sos">
+      <div class="box"><div class="t">茶卡盐湖 · 咨询 / 投诉</div><div class="num">0977-8246999</div></div>
+      <div class="box r"><div class="t">茶卡盐湖 · 救援</div><div class="num">0977-8246699</div></div>
+    </div>
+  </div>
+
+  <div class="closer reveal mt-l">
+    <div class="eyebrow"><span class="idx">＊</span><span class="en">Remember</span></div>
+    <p class="final">这趟旅行最容易出问题的，不是"没带漂亮衣服"，而是<u>晒伤、中暑、缺水、风寒、高反、晕车</u>和证件 / 预约遗漏。按上面的清单准备，基本可以覆盖大部分情况。</p>
+  </div>
+</section>
+
+<footer>西宁<span class="dot">·</span>德令哈<span class="dot">·</span>敦煌<span class="dot">·</span>张掖<span class="dot">·</span>一路顺风</footer>
+
+<script>
+(function(){
+  var body=document.body, prog=document.getElementById('prog');
+  var nodes=Array.prototype.slice.call(document.querySelectorAll('.rail .node'));
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // progress bar
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    var p=h>0?window.scrollY/h:0;
+    prog.style.width=(p*100).toFixed(2)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  // reveal on enter
+  var rObs=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rObs.unobserve(e.target);} });
+  },{threshold:0.14, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el,i){
+    // gentle stagger within a section
+    var sib=el.parentElement?Array.prototype.indexOf.call(el.parentElement.children,el):0;
+    el.style.transitionDelay=Math.min(sib,4)*80+'ms';
+    rObs.observe(el);
+  });
+
+  // phase / atmosphere + route rail, driven by which section owns the viewport center
+  var phased=Array.prototype.slice.call(document.querySelectorAll('[data-phase]'));
+  var pObs=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        var ph=e.target.getAttribute('data-phase');
+        if(body.getAttribute('data-phase')!==ph){
+          body.setAttribute('data-phase',ph);
+          nodes.forEach(function(n){ n.classList.toggle('on', n.getAttribute('data-p')===ph); });
+        }
+      }
+    });
+  },{threshold:0, rootMargin:'-45% 0px -45% 0px'});
+  phased.forEach(function(s){ pObs.observe(s); });
+
+  // set initial route node
+  nodes.forEach(function(n){ n.classList.toggle('on', n.getAttribute('data-p')==='1'); });
+})();
+</script>
+</body>
+</html>
